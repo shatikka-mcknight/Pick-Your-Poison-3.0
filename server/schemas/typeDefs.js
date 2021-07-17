@@ -21,7 +21,7 @@ type User {
   }
   input DrinkInput{
     drinkCity: String!
-    drinkLiquor: String!
+    drinkLiquor: String!!
   }
 
   
