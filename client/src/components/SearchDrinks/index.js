@@ -1,50 +1,42 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from 'react-router-dom';
-// import Auth from '../../utils/auth';
+import { Link } from "react-router-dom";
+// import { useHistory } from "react-router";
 
 const SearchDrinks = () => {
   const [city, updateCity] = useState("");
-  const [drink, updateDrink] = useState("");
+  const [drink, updateDrink] = useState({});
   const [weather, updateWeather] = useState({});
-
-  //const weatherURL =
-  // "https://api.openweathermap.org/data/2.5/weather?q=" +
-  // city +
-  // "&appid=f57cc3d88487e632b111d5d350ce8f21&units=imperial";
-  // getWeather();
-
-  //const cocktailURL =
-  // "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + drink;
-
-  // const [clouds, getClouds] = useState(null);
-  // const [temp, getTemp] = useState(null);
-  // const [wind, getWind] = useState(null);
-  // // const [myWeather, getMyWeather] = useState(null);
-  // const [drink1NameEl, getDrink1NameEl] = useState(null);
-  // const [drink1NameModal, getdrink1NameModal] = useState(null);
-  // const [ingredientsEl, getIngredientsEl] = useState(null);
-  // const [recipeEl, getRecipeEl] = useState(null);
-  // const [userInputEl, getUserInputE1] = useState("");
-  // const [weatherButton, getWeatherButton] = useState(null);
-
-  // if (city != null) {
-  //     const weatherURL =
-  //         "https://api.openweathermap.org/data/2.5/weather?q=" +
-  //         city +
-  //         "&appid=f57cc3d88487e632b111d5d350ce8f21&units=imperial";
-  //     getWeather();
-  // }
-
-  
+  //const drinkData = 
 
   function getTheWeather() {
     // uses the city "state" variable to fill out the queryURL's
     // makes the call, on data returned...updates state again (a different state), our markup will then be re rendered with our desired output
 
-    const weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=f57cc3d88487e632b111d5d350ce8f21&units=imperial";
+    const weatherURL =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      city +
+      "&appid=f57cc3d88487e632b111d5d350ce8f21&units=imperial";
     getWeather(weatherURL);
   }
 
+  function getTheDrink() {
+    // uses the city "state" variable to fill out the queryURL's
+    // makes the call, on data returned...updates state again (a different state), our markup will then be re rendered with our desired output
+
+    const drinkAPI =
+      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink;
+    getDrink(drinkAPI);
+  }
+
+  // function getRandomInt(max) {
+
+  //   // uses the city "state" variable to fill out the queryURL's
+  //   // makes the call, on data returned...updates state again (a different state), our markup will then be re rendered with our desired output
+
+  //   const drink1API =
+  //   "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+  //   getRandom(drink1API);
+  // }
   // this markup will be re-rendered when state is updated
   return (
     <div>
@@ -106,29 +98,36 @@ const SearchDrinks = () => {
             className="input is-primary is-medium"
             type="text"
             placeholder="Please type your city name..."
-            onChange={((e) => {updateCity(e.target.value)})}
+            onChange={(e) => {
+              updateCity(e.target.value);
+            }}
           />
         </div>
         <button
           id="weatherButton"
           className="button is-primary is-outlined has-text-black is-rounded city-button"
-          onClick={getTheWeather}
+          onClick={() => {
+            getTheWeather();
+            getTheDrink();
+            // getRandomInt();
+          }}
         >
           Pick Your Poison
         </button>
       </div>
       <div class="container" id="issueContainer">
         <p class="is-size-4 has-text-centered has-text-primary has-background-primary-light">
-          <br/>
-          {weather ?('Here is the weather for: ' + weather.name) : ''}
-          <br/>
-          {weather.weather ? weather.weather[0].description : ''}
-          <br/>
-          {weather.main ? weather.main.temp : ''}
+          <br />
+          {weather ? "Here is the weather for: " + weather.name : ""}
         </p>
       </div>
       <div>
-        <p></p>
+        <p>
+          Weather Condition: {weather.weather ? weather.weather[0].main : ""} -{" "}
+          {weather.weather ? weather.weather[0].description : ""}
+          <br />
+          Current Temperature: {weather.main ? weather.main.temp : ""}{" "}
+        </p>
       </div>
 
       <div class="columns is-centered is-desktop">
@@ -139,19 +138,32 @@ const SearchDrinks = () => {
                 id="drink1Name"
                 class="drinkNames is-size-2 mb-5 has-text-primary"
               >
-                Drink Name 1
+                {drink.drinks ? "Drink Title: " + drink.drinks[0].strDrink : ""}
               </p>
               <figure class="image is-4by3">
+                {drink.drinks
+                  ? "Drink Title: " + drink.drinks[0].strDrinkThumb
+                  : ""}
                 <img
                   id="image"
-                  src="https://bulma.io/images/placeholders/1280x960.png"
+                  src={drink.drinks ? drink.drinks[0].strDrinkThumb : ""}
                   alt="Placeholder"
                 />
               </figure>
               <button
-                class="button is-primary is-outlined has-text-black is-rounded mt-4 recipe-button"
                 id="btn"
+                className="button is-primary is-outlined has-text-black is-rounded mt-4 recipe-button"
+                // onClick={selectDrink}
               >
+                <Link
+                  to={{
+                    pathname: "/SingleDrink",
+                    //state: updateDrink(data),
+                  }}
+                >
+                  {" "}
+                  View Recipe{" "}
+                </Link>
                 View Recipe
               </button>
             </article>
@@ -324,12 +336,35 @@ const SearchDrinks = () => {
       })
       .then(function (data) {
         // set the state for weather
-        console.log('Here is the data returned from the fetch call: ', data);
+        console.log(
+          "Here is the Weather data returned from the fetch call: ",
+          data
+        );
         updateWeather(data);
       });
 
     if (city) {
     }
+  }
+
+  function randomDrink() {
+    const getRandomInt = Math.floor(Math.random() * Math.floor);
+    return getRandomInt(drink.drinks.length);
+  }
+
+  function getDrink() {
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(
+          "Here is the Drink data returned from the fetch call: ",
+          data
+        );
+        // console.log(drink.drinks.idDrink);
+        updateDrink(data);
+      });
   }
 };
 

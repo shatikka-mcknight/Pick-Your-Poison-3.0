@@ -13,7 +13,7 @@ import Home from './pages/Home';
 import Users from './pages/Users';
 import LoginSignUp from './pages/Login-SignUp';
 import NonUsers from './pages/NonUsers';
-import SingleDrinkList from './pages/SingleDrinkList';
+import SingleDrink from './pages/SingleDrink';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -66,8 +66,8 @@ function App() {
               <Users />
               {/* dashboard fro sign-in-users */}
             </Route>
-            <Route exact path="/SingleDrinkList">
-              <SingleDrinkList />
+            <Route exact path="/SingleDrink">
+              <SingleDrink />
             </Route>
              {/*<Route exact path="/DrinkList/:Id">
               <DrinkList />
