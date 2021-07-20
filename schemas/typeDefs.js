@@ -29,8 +29,11 @@ type User {
   type Query {
     user: User
   
-    
-  
+  }
+
+  type Auth {
+    token: ID!
+    user: User
   }
 
   type Mutation {
