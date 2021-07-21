@@ -13,7 +13,7 @@ import Home from './pages/Home';
 import Users from './pages/Users';
 import LoginSignUp from './pages/Login-SignUp';
 import NonUsers from './pages/NonUsers';
-import SingleDrink from './pages/SingleDrink';
+//import SingleDrink from './pages/SingleDrink';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -22,6 +22,7 @@ import Footer from './components/Footer';
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
+
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -66,9 +67,9 @@ function App() {
               <Users />
               {/* dashboard fro sign-in-users */}
             </Route>
-            <Route exact path="/SingleDrink">
+            {/* <Route exact path="/SingleDrink">
               <SingleDrink />
-            </Route>
+            </Route> */}
              {/*<Route exact path="/DrinkList/:Id">
               <DrinkList />
             </Route> */}

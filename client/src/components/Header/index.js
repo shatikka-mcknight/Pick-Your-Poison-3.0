@@ -20,21 +20,37 @@ const Header = () => {
         <div className="center">
           {Auth.loggedIn() ? (
             <>
-              <Link className="btn btn-lg btn-info m-2" to="/me">
+               <Link className="button is-primary is-rounded city-button m-2" to="/Login-SignUp">
+                Dashboard
+                </Link>
+                
+                <Link className="button is-primary is-rounded city-button m-2" to="/Login-SignUp">
+                Favorites
+              </Link>
+              <Link className="button is-primary is-rounded city-button m-2" to="/Login-SignUp">
+                History
+                </Link>
+              <Link className="button is-primary is-rounded city-button m-2" to="/me">
                 {Auth.getProfile().data.username}'s profile
               </Link>
-              <button className="btn btn-lg btn-light m-2" onClick={logout}>
+              <button className="button is-primary is-rounded city-button m-2" onClick={logout}>
                 Logout
               </button>
             </>
           ) : (
-            <>
-              <Link className="button is-primary is-outlined has-text-black  is-rounded city-button" to="/Login-SignUp">
+              <>
+                <div className="navbarCenter" >
+                  <Link className="button is-primary is-rounded city-button m-2" to="/">
+                Home
+                  </Link>
+              <Link className="button is-primary is-rounded city-button m-2" to="/Login-SignUp">
                 Login
-              </Link>
-                <Link className="is-rounded button is-primary is-outlined has-text-black  is-rounded city-button" to="/Login-SignUp">
+                </Link>
+                <Link className="button is-primary is-rounded city-button m-2" to="/Login-SignUp">
                 Sign-Up
-              </Link>
+                  </Link>
+                  
+                </div>
             </>
           )}
         </div>

@@ -45,7 +45,7 @@ const Login = (props) => {
       <div className="">
         <div className="">
           <h4 className="classloginsignup bg-dark text-light p-2">Login</h4>
-          <p className=" p-2 pb-1">Already have a account. Sign-In to view your recent searches and create your custom fit for every season!</p>
+          <p className="p-2 pb-1">Already have a account. Sign-In to view your recent searches and create your custom fit for every season!</p>
           <div className="p-2">
             {data ? (
               <p>
@@ -71,7 +71,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 /><br/>
                 <button
-                  className="is-rounded button is-primary is-outlined has-text-black  is-rounded city-button"
+                  className="button is-primarywhite is-outlined has-text-black is-rounded city-button"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
