@@ -79,3 +79,38 @@ html, body {
 .center {
   align-items: center;
 }
+
+.button.is-primary {
+ border-color: #ffffff !important; 
+ color: #ffffff !important;
+}
+
+.button.is-primarywhite {
+  background-color: #00d1b2;
+  border-color: #23605A !important; 
+  color: #ffffff !important;
+ }
+
+
+.navbarCenter {
+ display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.float {
+  float: left;
+}
+
+.drinkDiv {
+  padding-bottom: 10px;
+}
+
+.textCopy {
+  color: #23605A;
+}
+
+li {
+  list-style-type: none;
+}
