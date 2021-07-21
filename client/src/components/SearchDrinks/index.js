@@ -23,10 +23,15 @@ const SearchDrinks = () => {
   function getTheDrink() {
     // uses the city "state" variable to fill out the queryURL's
     // makes the call, on data returned...updates state again (a different state), our markup will then be re rendered with our desired output
-
-    const drinkAPI =
-      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink;
-    getDrink(drinkAPI);
+    // console.log(drink);
+    getDrinks().then(function({drinks}) {
+      const drink = drinks[getRandomInt(drinks.length)];
+      updateDrink(drink);
+      // console.log('line 28', drink);
+    })
+    // const drinkAPI =
+    //   "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink;
+    // getDrink(drinkAPI);
   }
 
   function getWeather(requestURL) {
@@ -48,11 +53,26 @@ const SearchDrinks = () => {
   }
 
   
-  
+  function getDrinks() {
+    return fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(
+        "Here is the Drink data returned from the fetch call: ",
+        data
+        );
+        return data;
+      // console.log(drink.drinks.idDrink);
+      // updateDrink(data);
+      // updateDrink(data);
+    });
+  }
   
 
   function getDrink() {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=")
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka")
       .then(function (response) {
         return response.json();
       })
@@ -67,15 +87,12 @@ const SearchDrinks = () => {
       });
   }
 
-  // function getRandomInt(max) {
+  function getRandomInt(max) {
 
-  //   // uses the city "state" variable to fill out the queryURL's
-  //   // makes the call, on data returned...updates state again (a different state), our markup will then be re rendered with our desired output
-
-  //   const drink1API =
-  //   "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
-  //   getRandom(drink1API);
-  // }
+    // uses the city "state" variable to fill out the queryURL's
+    // makes the call, on data returned...updates state again (a different state), our markup will then be re rendered with our desired output
+    return Math.floor(Math.random()* max)
+  }
   // this markup will be re-rendered when state is updated
   return (
     <div>
@@ -128,6 +145,14 @@ const SearchDrinks = () => {
         </div>
       </div>
       <div className="column">
+          <form method="get" onSubmit={
+            (e) => {
+              e.preventDefault();
+              getTheWeather();
+              getTheDrink();
+              // getRandomInt();
+            }
+          }>
         <div className="pb-3">
           <label className="label">
             Enter a city name to see your recommended drink
@@ -145,14 +170,11 @@ const SearchDrinks = () => {
         <button
           id="weatherButton"
           className="button is-primarywhite is-outlined has-text-black is-rounded city-button"
-          onClick={() => {
-            getTheWeather();
-            getTheDrink();
-            // getRandomInt();
-          }}
+          type="submit"
         >
           Pick Your Poison
         </button>
+          </form>
       </div>
       <div className="container" id="issueContainer">
         <p className="is-size-4 has-text-centered has-text-primary has-background-primary-light p-2">
@@ -178,21 +200,21 @@ const SearchDrinks = () => {
                 <div className="column">
                   <img
                     id="image" className="image"
-                    src={drink.drinks ? drink.drinks[14].strDrinkThumb : ""}
-                    alt={drink.drinks ? drink.drinks[14].strDrink : ""}
+                    src={drink ? drink.strDrinkThumb : ""}
+                    alt={drink ? drink.strDrink : ""}
                   />
                 </div>
                 {/* Drink Title */}
                 <div class="column">
                   <div  className=" is-size-2 has-text-primary ">
-                      {drink.drinks ? " Drink Title: " + drink.drinks[14].strDrink : ""}
+                      {drink ? " Drink Title: " + drink.strDrink : ""}
                   </div>
                   {/* Ingredients */}
                   <div className="drinkDiv">
                     Ingredients:
                     <ul>
-                      <li>{drink.drinks != null ?  drink.drinks[14].strIngredient1 + " " + drink.drinks[14].strMeasure1 : " "}</li>
-                      <li>{drink.drinks != null ? drink.drinks[14].strIngredient2 + " " + drink.drinks[14].strMeasure2 : ""}</li>
+                      <li>{drink != null ?  drink.strIngredient1 + " " + drink.strMeasure1 : " "}</li>
+                      <li>{drink != null ? drink.strIngredient2 + " " + drink.strMeasure2 : ""}</li>
                       <li>{drink.drinks != null ? drink.drinks[14].strIngredient3 + " " + drink.drinks[14].strMeasure3 : ""}</li>
                       <li>{drink.drinks != null ? drink.drinks[14].strIngredient4 + " " + drink.drinks[14].strMeasure4 : ""}</li>
                       <li>{drink.drinks != null ? drink.drinks[14].strIngredient5 + " " + drink.drinks[14].strMeasure5 : ""}</li>
@@ -211,7 +233,7 @@ const SearchDrinks = () => {
                   </div>
                   {/* Drink Instructions */}
                   <div className="drinkDiv">
-                    {drink.drinks != null ? "Instructions: "  + drink.drinks[14].strInstructions : ""}
+                    {drink.drinks != null ? "Instructions: "  + drink.strInstructions : ""}
                   </div>
                   {/* Drink Glass Type Suggestion */}
                   <div className="drinkDiv">
