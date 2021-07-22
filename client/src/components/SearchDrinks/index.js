@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const SearchDrinks = () => {
   const [city, updateCity] = useState("");
   const [drink, updateDrink] = useState({});
-  const [weather, updateWeather] = useState({});
+  const [weather, updateWeather] = useState();
   //const numberDrink=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
   //const drinkData =
 
@@ -176,20 +176,24 @@ const SearchDrinks = () => {
         </button>
           </form>
       </div>
-      <div className="container" id="issueContainer">
-        <p className="is-size-4 has-text-centered has-text-primary has-background-primary-light p-2">
-          {weather ? "Here is the weather for: " + weather.name : ""}
-          
-        </p>
-        
-      </div>
-      <div className=" has-text-centered has-text-primary p-2">
-        <p>
-          Weather Condition: <span className="textCopy"> {weather.weather ? weather.weather[0].main : ""} - {weather.weather ? weather.weather[0].description : ""} </span>
-          <br />
-          Current Temperature: <span className="textCopy">{weather.main ? weather.main.temp : ""}</span>
-        </p>
-      </div>
+      {weather && (
+        <>
+          <div className="container" id="issueContainer">
+            <p className="is-size-4 has-text-centered has-text-primary has-background-primary-light p-2">
+              {weather ? "Here is the weather for: " + weather.name : ""}
+              
+            </p>
+            
+          </div>
+          <div className=" has-text-centered has-text-primary p-2">
+            <p>
+              Weather Condition: <span className="textCopy"> {weather.weather ? weather.weather[0].main : ""} - {weather.weather ? weather.weather[0].description : ""} </span>
+              <br />
+              Current Temperature: <span className="textCopy">{weather.main ? weather.main.temp : ""}</span>
+            </p>
+          </div>
+        </>
+      )}
       <div className="columns is-centered is-desktop">
         <div className="column">
           <div className="tile is-parent has-text-left p-5">
